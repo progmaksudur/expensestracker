@@ -1,3 +1,4 @@
+import 'package:expanse_tracker_sql/model/expanses_category.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -126,12 +127,12 @@ class _ExpansesDashboardState extends State<ExpansesDashboard> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: ListView(
                       children: [
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[1],),
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[2],),
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[3],),
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[1],),
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[2],),
-                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: expansesIcon[3],),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit,),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit,),
+                        IteamShortDetails(typeIconData: Icons.ac_unit, title: "title", amount:"amount", time: "time",titleIconData: Icons.ac_unit),
                       ],
 
                     ),
