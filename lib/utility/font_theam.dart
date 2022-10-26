@@ -14,4 +14,5 @@ import 'colors.dart';
   TextStyle exTitle5= TextStyle(color: textColorSecondaryDeep,fontSize: 25 ,letterSpacing: .2,fontWeight: FontWeight.bold);
   TextStyle exTitle3= TextStyle(color: Colors.blueGrey.shade800,fontSize: 32 ,letterSpacing: .4,fontWeight: FontWeight.normal);
   TextStyle exTitle4= TextStyle(color: Colors.blueGrey.shade300,fontSize: 15 ,letterSpacing: .2,fontWeight: FontWeight.normal);
+  TextStyle   exTitle6= TextStyle(color: buttonColorPrimary,fontSize: 15 ,letterSpacing: .2,fontWeight: FontWeight.normal);
   TextStyle  spBTitle1= TextStyle(color: Colors.white,fontSize: 20 ,letterSpacing: .2,fontWeight: FontWeight.normal);
