@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => ExpansesTrackerProvider(), child: const MyApp()));
+      create: (context) => ExpansesTrackerProvider()..createDatabaase()
+      , child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

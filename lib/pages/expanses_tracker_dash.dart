@@ -2,7 +2,9 @@ import 'package:expanse_tracker_sql/model/expanses_category.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/expanse_tracker_provider.dart';
 import '../utility/colors.dart';
 import '../utility/expanses_type_icon.dart';
 import '../utility/font_theam.dart';
@@ -19,6 +21,8 @@ class ExpansesDashboard extends StatefulWidget {
 class _ExpansesDashboardState extends State<ExpansesDashboard> {
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<ExpansesTrackerProvider>(context, listen: false);
+    provider.createDatabaase();
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,

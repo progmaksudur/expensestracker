@@ -1,11 +1,15 @@
+import 'package:expanse_tracker_sql/model/expanses_model.dart';
+import 'package:expanse_tracker_sql/provider/expanse_tracker_provider.dart';
 import 'package:expanse_tracker_sql/utility/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../model/expanses_category.dart';
 import '../utility/expanses_type_icon.dart';
 import '../utility/font_theam.dart';
+import '../widgets/helper_function.dart';
 
 class NotedPage extends StatefulWidget {
   static const String routeName="/notedpage";
@@ -21,7 +25,7 @@ class _NotedPageState extends State<NotedPage> {
   DateTime? dateTime;
   int? iconData;
   String? _category;
-  int? cashin;
+  String? cashin;
   int? expansesType;
   @override
   void dispose() {
@@ -125,7 +129,7 @@ class _NotedPageState extends State<NotedPage> {
                           child: Text("Select Date",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
                         ),
                         Spacer(),
-                        Text(dateTime==null?"Chose Date":"${getFormattedDateTime(dateTime!,'dd/MM/yyyy')}",style: GoogleFonts.ptSerif(textStyle: exTitle6),),
+                        Text(dateTime==null?"Choose Date":"${getFormattedDateTime(dateTime!,'dd/MM/yyyy')}",style: GoogleFonts.ptSerif(textStyle: exTitle6),),
                         SizedBox(width: 20,),
                         IconButton(onPressed: _selectDate, icon: Icon(Icons.date_range,size: 25,color: buttonColorSecondary,)),
                       ],
@@ -148,6 +152,7 @@ class _NotedPageState extends State<NotedPage> {
                           child: TextFormField(
                             controller: insertAnountController,
                             keyboardType: TextInputType.number,
+                            style: GoogleFonts.ptSerif(textStyle: exTitle7),
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.attach_money,color:buttonColorPrimary,size: 25,),
                             ),
@@ -156,6 +161,85 @@ class _NotedPageState extends State<NotedPage> {
                           ),)
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    child: Text("Transection Type",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: buttonColorSecondary.withOpacity(.1)
+                      ),
+                      child:ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          SizedBox(
+                            width: 130,
+                            child: RadioListTile(
+                              title: Text("Cash"),
+                              value: "Cash",
+                              groupValue: cashin,
+                              onChanged: (value){
+                                setState(() {
+                                  cashin = value;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: RadioListTile(
+                              title: Text("Card"),
+                              value: "Card",
+                              groupValue: cashin,
+                              onChanged: (value){
+                                setState(() {
+                                  cashin = value;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: RadioListTile(
+                              title: Text("Online"),
+                              value: "Online",
+                              groupValue: cashin,
+                              onChanged: (value){
+                                setState(() {
+                                  cashin = value;
+                                });
+                              },
+                            ),
+                          ),
+
+                        ],
+                      ), ),
+                  ),
+                  SizedBox(height: 40,),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        height: 55,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: buttonColorPrimary,
+                        ),
+
+                        child: TextButton(
+                          onPressed: _saveData,
+                          child: Text("Save",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
+                  )
+
 
 
 
@@ -193,5 +277,54 @@ class _NotedPageState extends State<NotedPage> {
   }
   String getFormattedDateTime(DateTime dateTime, String pattern) =>
       DateFormat(pattern).format(dateTime);
+
+  void _saveData()async{
+    final provider = Provider.of<ExpansesTrackerProvider>(context, listen: false);
+    String trnsAmount=insertAnountController.text;
+    final catagorymodel=getCategoryModelByTitle(_category!);
+
+
+      if(expansesType==null){
+        showMsg(context,"Choose your data type ");
+      }
+      if(_category==null){
+        showMsg(context,"Choose your Category type ");
+      }
+      if(dateTime==null){
+        showMsg(context,"Choose your Date");
+      }
+      if(trnsAmount==null||trnsAmount.isEmpty){
+        showMsg(context,expansesType==2?"Choose Income amount":"Choose Expanses amount");
+      }
+      if(cashin==null){
+        showMsg(context,"Choose Transection type");
+      }
+      if(expansesType==1){
+      final expansesModel=ExpansesTrackerModel
+        (id: dateTime!.millisecondsSinceEpoch,
+          expansesTitle: catagorymodel.title,
+          time: DateTime.now().hour.toString(),
+          day: dateTime!.day.toString(),
+          month: dateTime!.month.toString(),
+          year: dateTime!.year.toString(),
+          expansesTimestamp: dateTime!.millisecondsSinceEpoch,
+          amount:trnsAmount ,
+          cashin: cashin.toString(),
+          expansesType: expansesType!.toInt());
+            final status=await provider.addData(expansesModel);
+
+            if(status){
+              insertAnountController.clear();
+              showMsg(context, "SuccessFully Done");
+              Navigator.pop(context);
+            }
+
+      }
+
+
+
+
+
+}
 
 }

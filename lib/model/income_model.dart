@@ -19,7 +19,7 @@ class IncomeModel {
   String incomeyear;
   int incomeTimestamp;
   String incomeamount;
-  int incomecashin;
+  String incomecashin;
   int incomeType;
 
   IncomeModel(

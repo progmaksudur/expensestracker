@@ -21,7 +21,7 @@ class ExpansesTrackerModel{
   String year;
   int expansesTimestamp;
   String amount;
-  int cashin;
+  String cashin;
   int expansesType;
 
   ExpansesTrackerModel(

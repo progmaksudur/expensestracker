@@ -13,8 +13,8 @@ class DBHalper{
   $tableExpansesMonth text,
   $tableExpansesYear text,
   $tableExpansesTimeStamp integer,
-  $tableExpansesAmount text
-  $tableExpansesCashin integer,
+  $tableExpansesAmount text,
+  $tableExpansesCashin text,
   $tableExpansesType integer
   )''';
   static const String createTableIncome='''create table $tableIncome(
@@ -26,7 +26,7 @@ class DBHalper{
   $tableIncomeYear text,
   $tableIncomeTimeStamp integer,
   $tableIncomeAmount text,
-  $tableIncomeCashin integer,
+  $tableIncomeCashin text,
   $tableIncomeType integer  
   )''';
 
