@@ -3,13 +3,18 @@ import 'package:expanse_tracker_sql/pages/home.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
 import 'package:expanse_tracker_sql/provider/expanse_tracker_provider.dart';
 import 'package:expanse_tracker_sql/utility/colors.dart';
+import 'package:expanse_tracker_sql/widgets/show_income_button_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => ExpansesTrackerProvider()..createDatabaase()
-      , child: const MyApp()));
+      create: (context) => ExpansesTrackerProvider()
+        ..createDatabaase()
+        ..getAllIncome()
+        ..getAllExpanses()
+        ..totalBalance(),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
       900: const Color(0xffFF8787),
     };
 
-    MaterialColor appColor=MaterialColor(0xFFFF8787, pokeballappSwatch);
+    MaterialColor appColor = MaterialColor(0xFFFF8787, pokeballappSwatch);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -41,7 +46,8 @@ class MyApp extends StatelessWidget {
       routes: {
         HomePage.routeName: (context) => HomePage(),
         ExpansesDashboard.routeName: (context) => ExpansesDashboard(),
-        NotedPage.routeName:(context)=>NotedPage(),
+        NotedPage.routeName: (context) => NotedPage(),
+        UpdateIncome.routeName:(context)=>UpdateIncome(),
       },
     );
   }

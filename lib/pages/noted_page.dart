@@ -1,4 +1,6 @@
 import 'package:expanse_tracker_sql/model/expanses_model.dart';
+import 'package:expanse_tracker_sql/model/income_category.dart';
+import 'package:expanse_tracker_sql/model/income_model.dart';
 import 'package:expanse_tracker_sql/provider/expanse_tracker_provider.dart';
 import 'package:expanse_tracker_sql/utility/colors.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../model/expanses_category.dart';
-import '../utility/expanses_type_icon.dart';
+import '../utility/category_type_icon.dart';
 import '../utility/font_theam.dart';
 import '../widgets/helper_function.dart';
 
 class NotedPage extends StatefulWidget {
-  static const String routeName="/notedpage";
+  static const String routeName = "/notedpage";
   const NotedPage({Key? key}) : super(key: key);
 
   @override
@@ -20,8 +22,7 @@ class NotedPage extends StatefulWidget {
 }
 
 class _NotedPageState extends State<NotedPage> {
-  
-  final insertAnountController=TextEditingController();
+  final insertAnountController = TextEditingController();
   DateTime? dateTime;
   int? iconData;
   String? _category;
@@ -36,20 +37,23 @@ class _NotedPageState extends State<NotedPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size=MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          color: buttonColorSecondary.withOpacity(.1)
-        ),
+        decoration: BoxDecoration(color: buttonColorSecondary.withOpacity(.1)),
         child: ListView(
-
           children: [
-            Center(child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
-              child: Text("Insert Your Data",style: GoogleFonts.ptSerif(textStyle: exTitle1),),
-            ),),
+            Center(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                child: Text(
+                  "Insert Your Data",
+                  style: GoogleFonts.ptSerif(textStyle: exTitle1),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
@@ -57,8 +61,14 @@ class _NotedPageState extends State<NotedPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 2),
-                    child: Text("Select Your data type",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                    child: Text(
+                      "Select Your data type",
+                      style: GoogleFonts.ptSerif(
+                        textStyle: exTitle2,
+                      ),
+                    ),
                   ),
                   Row(
                     children: [
@@ -67,7 +77,7 @@ class _NotedPageState extends State<NotedPage> {
                           title: Text("Expanse"),
                           value: 1,
                           groupValue: expansesType,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
                               expansesType = value;
                             });
@@ -79,14 +89,13 @@ class _NotedPageState extends State<NotedPage> {
                           title: Text("Income"),
                           value: 2,
                           groupValue: expansesType,
-                          onChanged: (value){
+                          onChanged: (value) {
                             setState(() {
                               expansesType = value;
                             });
                           },
                         ),
                       ),
-
                     ],
                   ),
                   Padding(
@@ -94,8 +103,16 @@ class _NotedPageState extends State<NotedPage> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 2),
-                          child: Text(expansesType==2?"Income Catagory":"Expanses Category",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 2),
+                          child: Text(
+                            expansesType == 2
+                                ? "Income Catagory"
+                                : "Expanses Category",
+                            style: GoogleFonts.ptSerif(
+                              textStyle: exTitle2,
+                            ),
+                          ),
                         ),
                         Spacer(),
                         DropdownButton(
@@ -103,20 +120,24 @@ class _NotedPageState extends State<NotedPage> {
                               "No category selected",
                             ),
                             value: _category,
-                            items:expansesDropDownList.map((category){
-                              return DropdownMenuItem(
-                                value: category.title,
-
-                                child: Text(category.title),
-                              );
-                            }).toList(),
-                            onChanged: (newValue){
+                            items: expansesType == 1
+                                ? expansesDropDownList.map((category) {
+                                    return DropdownMenuItem(
+                                      value: category.title,
+                                      child: Text(category.title),
+                                    );
+                                  }).toList()
+                                : incomeDropDownList.map((category) {
+                                    return DropdownMenuItem(
+                                      value: category.title,
+                                      child: Text(category.title),
+                                    );
+                                  }).toList(),
+                            onChanged: (newValue) {
                               setState(() {
-                                _category=newValue.toString();
+                                _category = newValue.toString();
                               });
                             }),
-
-
                       ],
                     ),
                   ),
@@ -125,56 +146,89 @@ class _NotedPageState extends State<NotedPage> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 2),
-                          child: Text("Select Date",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 2),
+                          child: Text(
+                            "Select Date",
+                            style: GoogleFonts.ptSerif(
+                              textStyle: exTitle2,
+                            ),
+                          ),
                         ),
                         Spacer(),
-                        Text(dateTime==null?"Choose Date":"${getFormattedDateTime(dateTime!,'dd/MM/yyyy')}",style: GoogleFonts.ptSerif(textStyle: exTitle6),),
-                        SizedBox(width: 20,),
-                        IconButton(onPressed: _selectDate, icon: Icon(Icons.date_range,size: 25,color: buttonColorSecondary,)),
+                        Text(
+                          dateTime == null
+                              ? "Choose Date"
+                              : "${getFormattedDateTime(dateTime!, 'dd/MM/yyyy')}",
+                          style: GoogleFonts.ptSerif(textStyle: exTitle6),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        IconButton(
+                            onPressed: _selectDate,
+                            icon: Icon(
+                              Icons.date_range,
+                              size: 25,
+                              color: buttonColorSecondary,
+                            )),
                       ],
                     ),
                   ),
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 2),
-                        child: Text("Amount \(Bdt)",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 2),
+                        child: Text(
+                          "Amount \(Bdt)",
+                          style: GoogleFonts.ptSerif(
+                            textStyle: exTitle2,
+                          ),
+                        ),
                       ),
                       Spacer(),
                       Container(
-                          height: 55,
-                          width: size.width/2,
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              color: buttonColorSecondary.withOpacity(.1)
-                          ),
-                          child: TextFormField(
-                            controller: insertAnountController,
-                            keyboardType: TextInputType.number,
-                            style: GoogleFonts.ptSerif(textStyle: exTitle7),
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.attach_money,color:buttonColorPrimary,size: 25,),
+                        height: 55,
+                        width: size.width / 2,
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: buttonColorSecondary.withOpacity(.1)),
+                        child: TextFormField(
+                          controller: insertAnountController,
+                          keyboardType: TextInputType.number,
+                          style: GoogleFonts.ptSerif(textStyle: exTitle7),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.attach_money,
+                              color: buttonColorPrimary,
+                              size: 25,
                             ),
-
-
-                          ),)
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                    child: Text("Transection Type",style: GoogleFonts.ptSerif(textStyle: exTitle2,),),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Text(
+                      "Transection Type",
+                      style: GoogleFonts.ptSerif(
+                        textStyle: exTitle2,
+                      ),
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Container(
                       height: 60,
                       width: double.infinity,
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                          color: buttonColorSecondary.withOpacity(.1)
-                      ),
-                      child:ListView(
+                          color: buttonColorSecondary.withOpacity(.1)),
+                      child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
                           SizedBox(
@@ -183,7 +237,7 @@ class _NotedPageState extends State<NotedPage> {
                               title: Text("Cash"),
                               value: "Cash",
                               groupValue: cashin,
-                              onChanged: (value){
+                              onChanged: (value) {
                                 setState(() {
                                   cashin = value;
                                 });
@@ -196,7 +250,7 @@ class _NotedPageState extends State<NotedPage> {
                               title: Text("Card"),
                               value: "Card",
                               groupValue: cashin,
-                              onChanged: (value){
+                              onChanged: (value) {
                                 setState(() {
                                   cashin = value;
                                 });
@@ -209,18 +263,20 @@ class _NotedPageState extends State<NotedPage> {
                               title: Text("Online"),
                               value: "Online",
                               groupValue: cashin,
-                              onChanged: (value){
+                              onChanged: (value) {
                                 setState(() {
                                   cashin = value;
                                 });
                               },
                             ),
                           ),
-
                         ],
-                      ), ),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 40,),
+                  SizedBox(
+                    height: 40,
+                  ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -231,37 +287,25 @@ class _NotedPageState extends State<NotedPage> {
                           borderRadius: BorderRadius.circular(20),
                           color: buttonColorPrimary,
                         ),
-
                         child: TextButton(
                           onPressed: _saveData,
-                          child: Text("Save",style: TextStyle(color: Colors.white),),
+                          child: Text(
+                            "Save",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
                   )
-
-
-
-
-
-
-
-
                 ],
               ),
             ),
-
-
-
           ],
-
         ),
       ),
     );
   }
-  CatagoryExpanses getCategoryModelByTitle(String title){
-    return expansesDropDownList.firstWhere((element) => element.title==title);
-  }
+
   void _selectDate() async {
     DateTime? selectedDate = await showDatePicker(
         context: context,
@@ -271,60 +315,43 @@ class _NotedPageState extends State<NotedPage> {
 
     if (selectedDate != null) {
       setState(() {
-        dateTime= selectedDate;
+        dateTime = selectedDate;
       });
     }
   }
-  String getFormattedDateTime(DateTime dateTime, String pattern) =>
-      DateFormat(pattern).format(dateTime);
 
-  void _saveData()async{
-    final provider = Provider.of<ExpansesTrackerProvider>(context, listen: false);
-    String trnsAmount=insertAnountController.text;
-    final catagorymodel=getCategoryModelByTitle(_category!);
-
-
-      if(expansesType==null){
-        showMsg(context,"Choose your data type ");
-      }
-      if(_category==null){
-        showMsg(context,"Choose your Category type ");
-      }
-      if(dateTime==null){
-        showMsg(context,"Choose your Date");
-      }
-      if(trnsAmount==null||trnsAmount.isEmpty){
-        showMsg(context,expansesType==2?"Choose Income amount":"Choose Expanses amount");
-      }
-      if(cashin==null){
-        showMsg(context,"Choose Transection type");
-      }
-      if(expansesType==1){
-      final expansesModel=ExpansesTrackerModel
-        (id: dateTime!.millisecondsSinceEpoch,
-          expansesTitle: catagorymodel.title,
-          time: DateTime.now().hour.toString(),
-          day: dateTime!.day.toString(),
-          month: dateTime!.month.toString(),
-          year: dateTime!.year.toString(),
-          expansesTimestamp: dateTime!.millisecondsSinceEpoch,
-          amount:trnsAmount ,
-          cashin: cashin.toString(),
-          expansesType: expansesType!.toInt());
-            final status=await provider.addData(expansesModel);
-
-            if(status){
-              insertAnountController.clear();
-              showMsg(context, "SuccessFully Done");
-              Navigator.pop(context);
-            }
-
-      }
-
-
-
-
-
-}
-
+  void _saveData() async {
+    final provider =
+        Provider.of<ExpansesTrackerProvider>(context, listen: false);
+    String trnsAmount = insertAnountController.text;
+    if (expansesType == null) {
+      showMsg(context, "Choose your data type ");
+    }
+    if (_category == null) {
+      showMsg(context, "Choose your Category type ");
+    }
+    if (dateTime == null) {
+      showMsg(context, "Choose your Date");
+    }
+    if (trnsAmount == null || trnsAmount.isEmpty) {
+      showMsg(
+          context,
+          expansesType == 2
+              ? "Choose Income amount"
+              : "Choose Expanses amount");
+    }
+    if (cashin == null) {
+      showMsg(context, "Choose Transection type");
+    }
+    final status = provider.saveData(
+        trnsAmount, _category!, cashin!, expansesType!, dateTime!);
+    if (await status) {
+      insertAnountController.clear();
+      showMsg(context, "SuccessFully Done");
+      provider.getAllIncome();
+      provider.getAllExpanses();
+      provider.totalBalance();
+      Navigator.pop(context);
+    }
+  }
 }

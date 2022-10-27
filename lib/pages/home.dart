@@ -1,7 +1,9 @@
 import 'package:expanse_tracker_sql/pages/expanses_tracker_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/expanse_tracker_provider.dart';
 import '../utility/colors.dart';
 import '../utility/font_theam.dart';
 

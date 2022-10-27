@@ -17,4 +17,5 @@ class CatagoryExpanses {
   static const String gas="Gas Bills";
   static const String grocery="Grocery Bills";
   static const String transport="Transport";
+  static const String houseRent="House Rent";
 }

@@ -40,6 +40,8 @@ class DBHalper{
     });
   }
 
+
+
   static Future<int> insertExpanse(ExpansesTrackerModel expansesTrackerModel)async{
     final db=await open();
     return db.insert(tableExpanses, expansesTrackerModel.toMap());
@@ -60,6 +62,22 @@ class DBHalper{
     final db= await open();
     final List<Map<String,dynamic>> incomeList=await db.query(tableIncome,orderBy: '$tableIncomeid asc');
     return List.generate(incomeList.length, (index) => IncomeModel.fromMap(incomeList[index]));
+  }
+
+  static Future<int> deleteIncome(int id)async{
+    final db=await open();
+    return db.delete(tableIncome, where: '$tableIncomeid = ?', whereArgs: [id]);
+  }
+  static Future<int> deleteExpanse(int id)async{
+    final db=await open();
+    return db.delete(tableExpanses, where: '$tableExpansesid = ?', whereArgs: [id]);
+  }
+  static Future<int> updateincomeData(int id,String title, String amount) async {
+    final db = await open();
+    return db.update(
+        tableIncome,
+        {tableIncomeTitle : title, tableIncomeAmount:amount},
+        where: '$tableIncomeid = ?', whereArgs: [id]);
   }
 
 }
