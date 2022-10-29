@@ -10,8 +10,10 @@ class ExpansesTrackerProvider extends ChangeNotifier{
   double totalIncome=0.0;
   double totalExpanse=0.0;
   double totalBalanceAmount=0.0;
+
   List<IncomeModel> incomeList=[];
   List<ExpansesTrackerModel> expansesList=[];
+
 
   Future createDatabaase()async{
     DBHalper.open();

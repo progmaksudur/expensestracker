@@ -1,12 +1,10 @@
 import 'package:expanse_tracker_sql/model/expanses_category.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
 import 'package:expanse_tracker_sql/pages/update_expanses.dart';
+import 'package:expanse_tracker_sql/widgets/filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import '../model/expanses_model.dart';
-import '../model/income_model.dart';
 import '../provider/expanse_tracker_provider.dart';
 import '../utility/colors.dart';
 import '../utility/category_type_icon.dart';
@@ -202,7 +200,7 @@ class _ExpansesDashboardState extends State<ExpansesDashboard> {
                                 color: textColorSecondaryDeep,
                               ),
                               onPressed: () {
-                                provider.totalBalance();
+                                FilterData(context,1);
                               },
                             )),
                       ),
@@ -328,6 +326,7 @@ class _ExpansesDashboardState extends State<ExpansesDashboard> {
       ),
     );
   }
+
   Future<bool?> _showConfirmationDialog(DismissDirection direction) {
     return showDialog(
         context: context,
@@ -346,5 +345,6 @@ class _ExpansesDashboardState extends State<ExpansesDashboard> {
           ],
         ));
   }
+
 
 }
