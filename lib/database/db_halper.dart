@@ -60,7 +60,7 @@ class DBHalper{
 }
   static Future<List<IncomeModel>> getAllIncome()async{
     final db= await open();
-    final List<Map<String,dynamic>> incomeList=await db.query(tableIncome,orderBy: '$tableIncomeid asc');
+    final List<Map<String,dynamic>> incomeList=await db.query(tableIncome,orderBy: '$tableIncomeTimeStamp desc');
     return List.generate(incomeList.length, (index) => IncomeModel.fromMap(incomeList[index]));
   }
 
@@ -78,6 +78,12 @@ class DBHalper{
         tableIncome,
         {tableIncomeTitle : title, tableIncomeAmount:amount},
         where: '$tableIncomeid = ?', whereArgs: [id]);
+  }
+  static Future<int> updateExpanseData(int id,String title,String amount)async{
+    final db=await open();
+
+    return db.update(tableExpanses,{tableExpansesTitle:title,tableExpansesAmount:amount},
+          where: '$tableExpansesid = ?',whereArgs: [id]);
   }
 
 }

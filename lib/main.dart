@@ -1,9 +1,10 @@
 import 'package:expanse_tracker_sql/pages/expanses_tracker_dash.dart';
 import 'package:expanse_tracker_sql/pages/home.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
+import 'package:expanse_tracker_sql/pages/update_expanses.dart';
 import 'package:expanse_tracker_sql/provider/expanse_tracker_provider.dart';
 import 'package:expanse_tracker_sql/utility/colors.dart';
-import 'package:expanse_tracker_sql/widgets/show_income_button_sheet.dart';
+import 'package:expanse_tracker_sql/pages/update_income.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         ExpansesDashboard.routeName: (context) => ExpansesDashboard(),
         NotedPage.routeName: (context) => NotedPage(),
         UpdateIncome.routeName:(context)=>UpdateIncome(),
+        UpdateExpanses.routeName:(context)=>UpdateExpanses(),
       },
     );
   }

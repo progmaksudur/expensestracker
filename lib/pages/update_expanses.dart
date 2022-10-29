@@ -1,32 +1,33 @@
+
+
 import 'package:expanse_tracker_sql/model/expanses_model.dart';
-import 'package:expanse_tracker_sql/provider/expanse_tracker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../model/income_model.dart';
+import '../provider/expanse_tracker_provider.dart';
 import '../utility/category_type_icon.dart';
 import '../utility/colors.dart';
 import '../utility/font_theam.dart';
-import 'helper_function.dart';
+import '../widgets/helper_function.dart';
 
-class UpdateIncome extends StatefulWidget {
-  static const String routeName="/updateincome";
-  const UpdateIncome({Key? key}) : super(key: key);
+class UpdateExpanses extends StatefulWidget {
+  static const String routeName="/updateexpanse";
+  const UpdateExpanses({Key? key}) : super(key: key);
 
   @override
-  State<UpdateIncome> createState() => _UpdateIncomeState();
+  State<UpdateExpanses> createState() => _UpdateExpansesState();
 }
 
-class _UpdateIncomeState extends State<UpdateIncome> {
+class _UpdateExpansesState extends State<UpdateExpanses> {
   final updateAnountController = TextEditingController();
-  late IncomeModel incomeModel;
+  late ExpansesTrackerModel expansesModel;
   String? category;
   DateTime? dateTime;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-     incomeModel=ModalRoute.of(context)!.settings.arguments as IncomeModel;
+    expansesModel=ModalRoute.of(context)!.settings.arguments as ExpansesTrackerModel;
     super.didChangeDependencies();
   }
 
@@ -39,10 +40,10 @@ class _UpdateIncomeState extends State<UpdateIncome> {
 
   @override
   Widget build(BuildContext context) {
-    var date = new DateTime.fromMicrosecondsSinceEpoch(incomeModel.incomeTimestamp* 1000);
+    var date = new DateTime.fromMicrosecondsSinceEpoch(expansesModel.expansesTimestamp* 1000);
     String time=getFormattedDateTime(date,'dd/MM/yyyy');
     return Scaffold(
-        body: Center(
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
           child: ListView(
@@ -66,7 +67,7 @@ class _UpdateIncomeState extends State<UpdateIncome> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 2),
-                      child: Text("${incomeModel.incomeTitle}",
+                      child: Text("${expansesModel.expansesTitle}",
                         style: GoogleFonts.ptSerif(
                           textStyle: exTitle2,
                         ),
@@ -84,7 +85,7 @@ class _UpdateIncomeState extends State<UpdateIncome> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 2),
-                      child: Text("Income Catagory",
+                      child: Text("Expanses Catagory",
                         style: GoogleFonts.ptSerif(
                           textStyle: exTitle2,
                         ),
@@ -96,7 +97,7 @@ class _UpdateIncomeState extends State<UpdateIncome> {
                           "No category selected",
                         ),
                         value: category,
-                        items:incomeDropDownList.map((category) {
+                        items:expansesDropDownList.map((category) {
                           return DropdownMenuItem(
                             value: category.title,
                             child: Text(category.title),
@@ -127,7 +128,7 @@ class _UpdateIncomeState extends State<UpdateIncome> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 2),
-                      child: Text("${incomeModel.incomeamount}",
+                      child: Text("${expansesModel.amount}",
                         style: GoogleFonts.ptSerif(
                           textStyle: exTitle2,
                         ),
@@ -227,10 +228,10 @@ class _UpdateIncomeState extends State<UpdateIncome> {
       amount=updateamount;
     }
     else{
-      title=incomeModel.incomeTitle;
-      amount=incomeModel.incomeamount;
+      title=expansesModel.expansesTitle;
+      amount=expansesModel.amount;
     }
-    final status= provider.updateIncome(incomeModel.id,title!,amount);
+    final status= provider.updateExpanses(expansesModel.id,title!,amount);
     if(await status){
       print(status);
       updateAnountController.clear();
@@ -243,4 +244,3 @@ class _UpdateIncomeState extends State<UpdateIncome> {
 
   }
 }
-

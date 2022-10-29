@@ -1,5 +1,6 @@
 import 'package:expanse_tracker_sql/model/expanses_category.dart';
 import 'package:expanse_tracker_sql/pages/noted_page.dart';
+import 'package:expanse_tracker_sql/pages/update_expanses.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ import '../utility/category_type_icon.dart';
 import '../utility/font_theam.dart';
 import '../widgets/helper_function.dart';
 import '../widgets/iteam_short_details.dart';
-import '../widgets/show_income_button_sheet.dart';
+import 'update_income.dart';
 
 class ExpansesDashboard extends StatefulWidget {
   static const String routeName = "/dashboard";
@@ -305,12 +306,17 @@ class _ExpansesDashboardState extends State<ExpansesDashboard> {
                                 onDismissed: (direction) {
                                   provider.deleteExpansesData(expanses.id);
                                 },
-                                child: IteamShortDetails(
-                                    typeIconData: Icons.arrow_circle_down,
-                                    title: expanses.expansesTitle,
-                                    amount:expanses.amount,
-                                    time: time,
-                                    titleIconData: expansesCat.icon),
+                                child: InkWell(
+                                  onLongPress: (){
+                                    Navigator.pushNamed(context,UpdateExpanses.routeName,arguments: expanses);
+                                  },
+                                  child: IteamShortDetails(
+                                      typeIconData: Icons.arrow_circle_down,
+                                      title: expanses.expansesTitle,
+                                      amount:expanses.amount,
+                                      time: time,
+                                      titleIconData: expansesCat.icon),
+                                ),
                               );
                             },),
                           )),

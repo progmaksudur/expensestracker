@@ -24,7 +24,7 @@ final List<CatagoryExpanses> expansesDropDownList = [
       icon: Icons.local_grocery_store,
       icondata: 5),
   CatagoryExpanses(
-      title: CatagoryExpanses.electricity,
+      title: CatagoryExpanses.transport,
       icon: Icons.card_travel,
       icondata: 6),
   CatagoryExpanses(

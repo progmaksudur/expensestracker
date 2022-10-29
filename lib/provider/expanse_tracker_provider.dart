@@ -111,6 +111,12 @@ class ExpansesTrackerProvider extends ChangeNotifier{
     return status>0?true:false;
 
   }
+  updateExpanses(int id,String title,String amount)async{
+    final status = await DBHalper.updateExpanseData(id, title, amount);
+    notifyListeners();
+    return status>0?true:false;
+
+  }
 
 
 
